@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/neko.iml" filepath="$PROJECT_DIR$/neko.iml" />
+      <module fileurl="file://$PROJECT_DIR$/knowledgebase.iml" filepath="$PROJECT_DIR$/knowledgebase.iml" />
     </modules>
   </component>
 </project>
