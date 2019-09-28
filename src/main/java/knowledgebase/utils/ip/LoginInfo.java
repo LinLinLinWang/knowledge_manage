@@ -23,7 +23,7 @@ public class LoginInfo {
      * @parameter:HttpServletRequest request
      * @return:ip 实现获取登录ip地址 以及 尝试使用dns域名解析
      */
-    public String getIpAddr(HttpServletRequest request) {
+    public static String getIpAddr(HttpServletRequest request) {
         //获取用户客户端真实ip地址
         //x-forwarded-for 记录正向代理的真实浏览器地址以及之间的代理服务器地址
         String ip = request.getHeader("x-forwarded-for");

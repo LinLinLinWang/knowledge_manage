@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import knowledgebase.entity.User;
-import knowledgebase.entity.Users;
+
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -30,9 +30,9 @@ public class Token {
         Claims claims = Jwts.claims();
 
         //添加自定义信息
-        claims.put("Name", user);
-        claims.put("Phone", user);
-        claims.put("Uid",user);
+        claims.put("Name", user.getUname());
+        claims.put("Type", user.getType());
+        claims.put("Uid",user.getUserid());
 
         //签名的使用者
         claims.setAudience("user");
@@ -66,7 +66,7 @@ public class Token {
         //提取信息
         Map<String, String> info = new HashMap<>();
         info.put("Name", Claims.get("Name").toString());
-        info.put("Phone", Claims.get("Phone").toString());
+        info.put("Type", Claims.get("Type").toString());
         info.put("Uid", Claims.get("Uid").toString());
         info.put("Expiration", Claims.getExpiration().toString());
         info.put("IssuedAt", Claims.getIssuedAt().toString());
