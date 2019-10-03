@@ -1,7 +1,7 @@
 package knowledgebase.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import knowledgebase.entity.Knowledgepoint;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import knowledgebase.entity.Knowledgepoint;
  * </p>
  *
  * @author Lenovo
- * @since 2019-09-15
+ * @since 2019-10-04
  */
 public interface IKnowledgepointService extends IService<Knowledgepoint> {
 

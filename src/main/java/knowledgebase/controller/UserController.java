@@ -1,6 +1,7 @@
 package knowledgebase.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import knowledgebase.entity.User;
 import knowledgebase.entity.Users;
@@ -150,6 +151,18 @@ public class UserController {
             System.out.println("输入的"+PwdUtil.encode(password));
             if(((User)userlService.list(queryWrapper).get(0)).getPassword().equals(PwdUtil.encode(password))){
                 map.put("isThisGuy","yes");
+                //获取user
+                //生成user
+                QueryWrapper queryWrapper_ = new QueryWrapper();
+                queryWrapper.eq("userid",idnumber);
+                User user_ = userlService.getOne(queryWrapper);
+                //清除密码
+                user_.setPassword("");
+
+
+                map.put("user", JSON.toJSONString(user_));
+                System.out.println(JSON.toJSONString(user_));
+
                 //生成token
                 String token= Token.getJwtToken((User)userlService.list(queryWrapper).get(0));
                 map.put("token",token);
@@ -186,5 +199,64 @@ public class UserController {
 
         return map;
     }
+
+    @RequestMapping(value = "/changeInfo")
+        public Map<String, String> changeInfo(HttpServletRequest request, String idnumber,String password,String uname) {
+        Map<String, String> map = new HashMap<>();
+            System.out.println("当前账号"+idnumber);
+            System.out.println("要修改的密码"+password.equals(""));
+            System.out.println("要修改的姓名"+uname);
+            QueryWrapper queryWrapper = new QueryWrapper();
+          queryWrapper.eq("userid", idnumber);
+         User user=userlService.getOne(queryWrapper);
+           if(password.equals("")){
+               //仅仅修改昵称
+              user.setUname(uname);
+               map.put("needClear","no");
+
+           }else{
+               map.put("needClear","ok");
+               user.setUname(uname);
+               user.setPassword(PwdUtil.encode(password));
+           }
+           if(userlService.update(user,queryWrapper)){
+               map.put("updateInfo","ok");
+               map.put("user", JSON.toJSONString(user.setPassword("")));
+               //用户修改成功
+               //重新生成token
+               String token= Token.getJwtToken(user);
+               //存在redis数据库中
+               if(!redisUtil.hasKey(idnumber)){
+                   System.out.println("redis没有记录");
+                   try{
+                       System.out.println("redis插入记录");
+                       redisUtil.set(idnumber,token);
+                       redisUtil.expire(idnumber,9000,TimeUnit.SECONDS);
+                   }catch (Exception e){
+
+                       System.out.println("redis存储失败或者修改时间失败");
+
+                   }
+
+
+               }else{
+                   //有记录 //覆盖
+
+                   redisUtil.set(idnumber,token);
+                   redisUtil.expire(idnumber,9000,TimeUnit.SECONDS);
+               }
+
+
+           }else{
+               map.put("updateInfo","no");
+
+               map.put("user", JSON.toJSONString(user.setPassword("")));
+
+           }
+
+
+        System.out.println("要返回的信息"+map);
+            return map;
+        }
 
 }

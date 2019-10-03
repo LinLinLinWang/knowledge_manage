@@ -1,8 +1,7 @@
 package knowledgebase.service;
 
+import knowledgebase.entity.Modulecreate;
 import com.baomidou.mybatisplus.extension.service.IService;
-import knowledgebase.entity.Modulecreate;
-import knowledgebase.entity.Modulecreate;
 
 /**
  * <p>
@@ -10,7 +9,7 @@ import knowledgebase.entity.Modulecreate;
  * </p>
  *
  * @author Lenovo
- * @since 2019-09-15
+ * @since 2019-09-30
  */
 public interface IModulecreateService extends IService<Modulecreate> {
 

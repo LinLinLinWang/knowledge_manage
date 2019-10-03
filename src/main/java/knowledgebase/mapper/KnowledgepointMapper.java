@@ -1,8 +1,7 @@
 package knowledgebase.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import knowledgebase.entity.Knowledgepoint;
-
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -10,7 +9,7 @@ import knowledgebase.entity.Knowledgepoint;
  * </p>
  *
  * @author Lenovo
- * @since 2019-09-15
+ * @since 2019-10-04
  */
 public interface KnowledgepointMapper extends BaseMapper<Knowledgepoint> {
 

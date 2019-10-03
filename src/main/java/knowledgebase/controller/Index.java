@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequestMapping("/knowledgebase//index")
 public class Index {
     @Autowired
     private RedisUtil redisUtil;
@@ -25,5 +26,14 @@ public class Index {
     public String alive(HttpServletRequest request) {
         return "200";
     }
+    //获取token
+    @RequestMapping(value = "/getToken")
+    public String getToken(HttpServletRequest request) {
+       //获取token
+        String token = request.getHeader("Authorization");
+        System.out.println("前端获取token"+token);
+        return "此路不通\n" + "Your ip:" + loginInfo.getIpAddr(request) + "\n" + loginInfo.getIpLocation(loginInfo.getIpAddr(request));
+    }
+
 
 }
